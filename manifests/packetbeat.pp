@@ -24,11 +24,22 @@ class beats::packetbeat (
   $pgsql_max_rows            = undef,
   $pgsql_max_row_length      = undef,
 ){
-  include ::apt::update
-  include beats::packetbeat::config
-  package {'packetbeat':
-    ensure  => $beats::packetbeat::ensure,
-    require => Class['apt::update']
+
+  case $::osfamily {
+    'Debian': {
+      include ::apt::update
+      include beats::packetbeat::config
+      package {'packetbeat':
+        ensure  => $beats::packetbeat::ensure,
+        require => Class['apt::update']
+      }
+    }
+    'RedHat': {
+      include beats::packetbeat::config
+      package { 'packetbeat':
+        ensure  => $beats::packetbeat::ensure,
+      }
+    }
   }
   service { 'packetbeat':
     ensure => running,

@@ -54,5 +54,5 @@ class beats (
   }
 
   include beats::repo, beats::package, beats::config
-  Class['beats::repo::apt'] -> Class['beats::package'] -> Class['beats::config']
+  Class['beats::repo'] -> Class['beats::package'] -> Class['beats::config']
 }
