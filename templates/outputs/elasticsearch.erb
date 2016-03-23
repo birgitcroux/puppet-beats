@@ -1,8 +1,7 @@
   elasticsearch:
     enabled: true
-    host: <%= @es_host %>
-    port: <%= @es_port %>
-    es_save_topology: <%= @es_save_topology %>
+    hosts: <%= @hosts.to_json %>
+    save_topology: <%= @save_topology %>
 <% if @es_protocol %>
     # Protocol and auth credentials
     es_protocol: <%= @es_protocol %>
@@ -17,7 +16,7 @@
     # Custom index location
     es_index: <%= @es_index %>
 <% end %>
-<% if @es_http_path %>  
+<% if @es_http_path %>
     # Custom HTTP path to ES
     path: <%= @es_http_path %>
 <% end %>
