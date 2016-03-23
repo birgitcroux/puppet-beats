@@ -40,6 +40,7 @@ class beats (
   $mysql_enabled         = false,
   $redis_enabled         = false,
   $manage_geoip          = true,
+  $geoip_paths           = ['/usr/share/GeoIP/GeoIPCity.dat'],
 ){
 
   if $outputs_deep_merge {
