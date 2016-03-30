@@ -1,6 +1,8 @@
 # Packetbeat class
 class beats::packetbeat (
   $ensure                    = present,
+  $service_ensure            = running,
+  $service_enable            = true,
   $interfaces                = 'any',
   $int_snaplen               = undef,
   $int_sniffer_type          = undef,
@@ -42,8 +44,8 @@ class beats::packetbeat (
     }
   }
   service { 'packetbeat':
-    ensure => running,
-    enable => true,
+    ensure => $service_ensure,
+    enable => $service_enable,
   }
   Package['packetbeat'] -> Class['beats::packetbeat::config'] ~>
   Service['packetbeat']

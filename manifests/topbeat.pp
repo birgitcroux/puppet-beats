@@ -6,6 +6,8 @@ class beats::topbeat (
   $stats_system     = true,
   $stats_proc       = true,
   $stats_filesystem = true,
+  $service_ensure = running,
+  $service_enable = true,
 ){
   case $::osfamily {
     'Debian': {
@@ -28,8 +30,8 @@ class beats::topbeat (
   }
 
   service { 'topbeat':
-    ensure => running,
-    enable => true,
+    ensure => $service_ensure,
+    enable => $service_enable,
   }
 
   Package['topbeat'] -> Class['beats::topbeat::config'] ~> Service['topbeat']

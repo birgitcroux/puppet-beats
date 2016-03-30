@@ -1,10 +1,12 @@
 # Filebeat
 class beats::filebeat (
-  $ensure        = present,
-  $idle_timeout  = '5s',
-  $prospectors   = {},
-  $registry_file = '/var/lib/filebeat/registry',
-  $spool_size    = 1024,
+  $ensure         = present,
+  $service_ensure = running,
+  $service_enable = true,
+  $idle_timeout   = '5s',
+  $prospectors    = {},
+  $registry_file  = '/var/lib/filebeat/registry',
+  $spool_size     = 1024,
 ){
 
   beats::common::headers {'filebeat':}
@@ -22,8 +24,8 @@ class beats::filebeat (
     require => Class['apt::update']
   }
   service { 'filebeat':
-    ensure => running,
-    enable => true,
+    ensure => $service_ensure,
+    enable => $service_enable,
   }
   if $prospectors {
     create_resources('::beats::filebeat::prospector', $prospectors )
